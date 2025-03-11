@@ -56,13 +56,13 @@ Notes:
 """
 
 
-
 import os
 import json
+import csv
 from datetime import datetime
 
 # Load configuration from JSON file
-CONFIG_PATH = r"E:\local_Sebastian\z\PBR_Materials_0010_25\software\python\rename_path_config.json"
+CONFIG_PATH = r"E:\local_Sebastian\z\PBR_Materials_0010_25\software\python\rename_pbr\rename_path_config.json"
 
 def load_config():
     """Load configuration from JSON file."""
@@ -85,15 +85,32 @@ def load_rename_patterns():
     """Load rename patterns from the CSV file."""
     patterns = {}
     try:
-        with open(CONFIG_FILE, newline='', encoding='utf-8') as csvfile:
+        print(f"DEBUG: Trying to open CSV file at: {CONFIG_FILE}")
+
+        # Verwende utf-8-sig, um Byte Order Marks (BOM) zu entfernen
+        with open(CONFIG_FILE, newline='', encoding='utf-8-sig') as csvfile:
             reader = csv.reader(csvfile, delimiter=';')
+            
+            # ➡️ Überspringe die Kopfzeile der CSV-Datei
+            header = next(reader)
+            print(f"DEBUG: Skipping CSV header: {header}")
+
             for row in reader:
                 if len(row) == 2:
                     old_name = row[0].strip()
                     new_name = row[1].strip()
                     patterns[old_name] = new_name
+
+        print("DEBUG: CSV file read successfully ✅")
+
+    except FileNotFoundError:
+        print(f"❌ Error: CSV file not found at '{CONFIG_FILE}'")
     except Exception as e:
-        print(f"Error reading config file: {e}")
+        print(f"❌ Error reading CSV file: {e}")
+
+    print("--------------")
+    print(patterns)  # Zeigt die geladenen Patterns für Debugging-Zwecke
+    print("--------------")
     return patterns
 
 def rename_files():
@@ -115,6 +132,7 @@ def rename_files():
                     # Apply rename patterns
                     for old_pattern, new_pattern in patterns.items():
                         if old_pattern in new_file_name:
+                            print(f"   MATCH: '{old_pattern}' → '{new_pattern}'")
                             new_file_name = new_file_name.replace(old_pattern, new_pattern)
 
                     new_path = os.path.join(root, new_file_name)
