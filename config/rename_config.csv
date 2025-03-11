@@ -1,0 +1,8 @@
+old_filename;new_filename
+_BaseColor.png;    _COL.png
+_Metallic.png;     _METAL.png
+_Roughness.png;    _ROUGH.png
+_Displacement.png; _DISP.png
+_Normal.png;       _NRM.png
+_AO.png;           _AO.png
+_Opacity;          _OPAC.png
