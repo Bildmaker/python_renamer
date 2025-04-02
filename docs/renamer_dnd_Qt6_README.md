@@ -14,7 +14,7 @@ A modern file renaming tool with drag-and-drop support, built using **PyQt6**.
 
 Here’s what the Qt6 version looks like in action:
 
-![Renamer Qt6 Screenshot](images/screenshot_renamer_dnd_Qt6.png)
+![Renamer Qt6 Screenshot](images/Screenshot_renamer_dnd_Qt6.png)
 
 ## ▶️ Requirements
 
